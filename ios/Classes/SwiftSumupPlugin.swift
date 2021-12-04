@@ -27,6 +27,11 @@ public class SwiftSumupPlugin: NSObject, FlutterPlugin {
                 pluginResponse.message = ["result": success]
                 result(pluginResponse.toDictionary())
             }
+        case "loginWithToken":
+            self.login { success in
+                pluginResponse.message = ["result": success]
+                result(pluginResponse.toDictionary())
+            }
         case "isLoggedIn":
             let isLoggedIn = self.isLoggedIn()
             pluginResponse.message = ["result": isLoggedIn]
@@ -122,6 +127,13 @@ public class SwiftSumupPlugin: NSObject, FlutterPlugin {
     
     private func login(completion: @escaping ((Bool) -> Void)) {
         SumUpSDK.presentLogin(from: topController(), animated: true)
+        { loggedIn, _ in
+            completion(loggedIn)
+        }
+    }
+
+    private func loginWithToken(token: String, completion: @escaping ((Bool) -> Void)) {
+        SumUpSDK.login(withToken: token)
         { loggedIn, _ in
             completion(loggedIn)
         }
