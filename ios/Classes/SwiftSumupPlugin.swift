@@ -28,7 +28,7 @@ public class SwiftSumupPlugin: NSObject, FlutterPlugin {
                 result(pluginResponse.toDictionary())
             }
         case "loginWithToken":
-            self.login { success in
+            self.loginWithToken { success in
                 pluginResponse.message = ["result": success]
                 result(pluginResponse.toDictionary())
             }
