@@ -28,7 +28,7 @@ public class SwiftSumupPlugin: NSObject, FlutterPlugin {
                 result(pluginResponse.toDictionary())
             }
         case "loginWithToken":
-            self.loginWithToken(call.arguments as! String) { success in
+            self.loginWithToken(token: call.arguments as! String) { success in
                 pluginResponse.message = ["result": success]
                 result(pluginResponse.toDictionary())
             }
@@ -49,6 +49,9 @@ public class SwiftSumupPlugin: NSObject, FlutterPlugin {
                 pluginResponse.message = ["result": error]
                 result(pluginResponse.toDictionary())
             }
+            
+        case "prepareForCheckout":
+            self.prepareForCheckout()
             
         case "checkout":
             let args = call.arguments as! [String: Any]
@@ -171,6 +174,10 @@ public class SwiftSumupPlugin: NSObject, FlutterPlugin {
             
             completion(errorMessage)
         }
+    }
+    
+    private func prepareForCheckout() {
+        SumUpSDK.prepareForCheckout()
     }
     
     private func checkout(request: CheckoutRequest, completion: @escaping ((CheckoutResult) -> Void)) {
